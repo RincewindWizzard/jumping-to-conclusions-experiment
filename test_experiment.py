@@ -2,6 +2,7 @@ from experiment import urns, probability, urn_probability, certainty
 from experiment import Color
 import itertools
 import csv
+import math
 
 W = Color.WHITE
 B = Color.BLACK
@@ -55,7 +56,7 @@ def test_create_table():
 
     # format numbers
     result = [
-        [f'{x*100:0.2f}%' for x in row]
+        [f'{x * 100:0.2f}%' for x in row]
         for row in result
     ]
 
@@ -69,3 +70,17 @@ def test_create_table():
 
         for i, row in enumerate(result):
             writer.writerow([i] + row)
+
+
+def test_create_quotes():
+    result = [
+        (0.5, (1, 1))
+    ]
+    for x in range(200):
+        for y in range(1, x + 1):
+            if math.gcd(x, y) == 1:
+                result.append((x / (y + x), (x, y)))
+
+    result.sort()
+    for t in result[-300:]:
+        print(f'{t[0]:0.4f} = {t[1]}')
